@@ -1,0 +1,343 @@
+1. DATABASE NAME: LIBRARY
+
+2. CREATING DATABASE:
+
+CREATE DATABASE LIBRARY;
+
+3. CHANGE DATABASE:
+
+USE LIBRARY;
+
+4. CREATING TABLES:
+
+i. BOOKS TABLE:
+
+CREATE TABLE Books (
+    book_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author_id INT,
+    publisher_id INT,
+    quantity_in_stock INT,
+    CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES Authors(author_id),
+    CONSTRAINT fk_publisher FOREIGN KEY (publisher_id) REFERENCES Publishers(publisher_id)
+);
+
+ii. MEMBERS TABLE:
+
+CREATE TABLE Members (
+    member_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
+    address VARCHAR(255),
+    join_date DATE
+);
+
+iii. LOANS TABLE:
+
+CREATE TABLE Loans (
+    loan_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT,
+    book_id INT,
+    loan_date DATE,
+    due_date DATE,
+    return_date DATE,
+    CONSTRAINT fk_member FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+iv.AUTHORS TABLE:
+
+CREATE TABLE Authors (
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    address VARCHAR(255),
+    phone VARCHAR(20),
+    email VARCHAR(255)
+);
+
+v. PUBLISHERS TABLE:
+
+CREATE TABLE Publishers (
+    publisher_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    address VARCHAR(255),
+    phone VARCHAR(20),
+    email VARCHAR(255)
+);
+
+vi. LIBRARIANS TABLE:
+
+CREATE TABLE Librarians (
+    librarian_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    address VARCHAR(255),
+    hire_date DATE,
+    role VARCHAR(100),
+    salary DECIMAL(10, 2)
+);
+
+vii. RESERVATIONS TABLE:
+
+CREATE TABLE Reservations (
+    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT,
+    book_id INT,
+    reservation_date DATE,
+    status VARCHAR(50),
+    CONSTRAINT fk_reservation_member FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    CONSTRAINT fk_reservation_book FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+5. POPULATING THE TABLES:
+
+i. BOOKS TABLE:
+
+INSERT INTO Books (title, author_id, publisher_id, quantity_in_stock) VALUES
+('Pride and Prejudice', 1, 11, 10),
+('Adventures of Huckleberry Finn', 2, 7, 8),
+('A Tale of Two Cities', 3, 11, 12),
+('The Great Gatsby', 4, 1, 15),
+('1984', 5, 11, 20),
+('Harry Potter and the Philosopher\'s Stone', 6, 5, 30),
+('The Old Man and the Sea', 7, 1, 5),
+('Murder on the Orient Express', 8, 11, 7),
+('War and Peace', 9, 9, 3),
+('Moby Dick', 10, 2, 6),
+('Wuthering Heights', 11, 11, 9),
+('To the Lighthouse', 12, 11, 4),
+('One Hundred Years of Solitude', 13, 1, 10),
+('To Kill a Mockingbird', 14, 11, 20),
+('The Lord of the Rings', 15, 15, 25),
+('The Picture of Dorian Gray', 16, 19, 8),
+('Crime and Punishment', 17, 1, 7),
+('Ulysses', 18, 16, 6),
+('Frankenstein', 19, 11, 12),
+('The War of the Worlds', 20, 20, 15);
+
+ii. MEMBERS TABLE:
+
+INSERT INTO Members (first_name, last_name, email, phone, address, join_date) VALUES
+('John', 'Doe', 'john.doe@example.com', '123-456-7890', '123 Main St, Springfield, IL, USA, 62701', '2022-01-15'),
+('Jane', 'Smith', 'jane.smith@example.com', '234-567-8901', '456 Elm St, Shelbyville, IL, USA, 62565', '2021-02-20'),
+('Michael', 'Brown', 'michael.brown@example.com', '345-678-9012', '789 Oak St, Centerville, IL, USA, 62014', '2020-03-10'),
+('Emily', 'Davis', 'emily.davis@example.com', '456-789-0123', '321 Pine St, Riverdale, IL, USA, 60927', '2019-04-05'),
+('Daniel', 'Wilson', 'daniel.wilson@example.com', '567-890-1234', '654 Maple St, Capital City, IL, USA, 62702', '2021-05-25'),
+('Sophia', 'Johnson', 'sophia.johnson@example.com', '678-901-2345', '987 Birch St, Ogdenville, IL, USA, 62269', '2022-06-15'),
+('James', 'Martinez', 'james.martinez@example.com', '789-012-3456', '123 Cedar St, North Haverbrook, IL, USA, 62088', '2020-07-30'),
+('Isabella', 'Garcia', 'isabella.garcia@example.com', '890-123-4567', '456 Walnut St, Brockway, IL, USA, 61820', '2019-08-22'),
+('Matthew', 'Martinez', 'matthew.martinez@example.com', '901-234-5678', '789 Willow St, Springfield, IL, USA, 62703', '2021-09-10'),
+('Olivia', 'Rodriguez', 'olivia.rodriguez@example.com', '012-345-6789', '321 Ash St, Shelbyville, IL, USA, 62566', '2022-10-01'),
+('David', 'Lee', 'david.lee@example.com', '123-678-9012', '654 Poplar St, Centerville, IL, USA, 62015', '2020-11-05'),
+('Ava', 'Walker', 'ava.walker@example.com', '234-789-0123', '987 Chestnut St, Riverdale, IL, USA, 60928', '2019-12-10'),
+('Joseph', 'Hall', 'joseph.hall@example.com', '345-890-1234', '123 Spruce St, Capital City, IL, USA, 62704', '2021-01-20'),
+('Mia', 'Allen', 'mia.allen@example.com', '456-901-2345', '456 Sycamore St, Ogdenville, IL, USA, 62270', '2022-02-25'),
+('Christopher', 'Young', 'christopher.young@example.com', '567-012-3456', '789 Fir St, North Haverbrook, IL, USA, 62089', '2020-03-15'),
+('Amelia', 'King', 'amelia.king@example.com', '678-123-4567', '321 Redwood St, Brockway, IL, USA, 61821', '2019-04-25'),
+('Joshua', 'Hernandez', 'joshua.hernandez@example.com', '789-234-5678', '654 Palm St, Springfield, IL, USA, 62705', '2021-05-10'),
+('Charlotte', 'Lopez', 'charlotte.lopez@example.com', '890-345-6789', '987 Hawthorn St, Shelbyville, IL, USA, 62567', '2022-06-20'),
+('Andrew', 'Scott', 'andrew.scott@example.com', '901-456-7890', '123 Cypress St, Centerville, IL, USA, 62016', '2020-07-05'),
+('Sofia', 'Green', 'sofia.green@example.com', '012-567-8901', '456 Magnolia St, Riverdale, IL, USA, 60929', '2019-08-30');
+
+iii. LOANS TABLE:
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(1, 3, '2023-06-01', '2023-06-15');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 3;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(2, 5, '2023-05-15', '2023-06-10');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 5;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(3, 17, '2023-05-20', '2023-06-05');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(4, 11, '2023-06-05', '2023-06-25');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 11;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(5, 14, '2023-06-10', '2023-06-30');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 14;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(6, 17, '2023-05-25', '2023-06-20');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(7, 20, '2023-05-30', '2023-06-15');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 20;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(8, 12, '2023-06-15', '2023-07-05');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 12;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(9, 17, '2023-06-20', '2023-07-10');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(10, 12, '2023-06-25', '2023-07-15');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 12;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(11, 9, '2023-07-01', '2023-07-20');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 9;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(12, 17, '2023-07-05', '2023-07-25');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(13, 15, '2023-07-10', '2023-07-30');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 15;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(14, 12, '2023-07-15', '2023-08-05');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 12;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(15, 9, '2023-07-20', '2023-08-10');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 9;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(16, 17, '2023-07-25', '2023-08-15');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(17, 9, '2023-08-01', '2023-08-20');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 9;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(18, 13, '2023-08-05', '2023-08-25');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 13;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(19, 16, '2023-08-10', '2023-09-05');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 16;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(20, 19, '2023-08-15', '2023-09-10');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 19;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(1, 3, '2023-08-20', '2023-09-05');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 3;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(2, 17, '2023-09-10', '2023-09-25');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(3, 12, '2023-09-15', '2023-10-01');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 12;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(4, 5, '2023-10-05', '2023-10-20');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 5;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(5, 5, '2023-10-25', '2023-11-10');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 5;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(6, 17, '2023-11-15', '2023-12-01');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 17;
+
+INSERT INTO Loans (member_id, book_id, loan_date, return_date) VALUES
+(7, 20, '2023-12-05', '2023-12-20');
+UPDATE Books SET quantity_in_stock = quantity_in_stock - 1 WHERE book_id = 20;
+
+iv.AUTHORS TABLE:
+
+INSERT INTO Authors (first_name, last_name, address, phone, email) VALUES
+('Jane', 'Austen', 'Steventon, Hampshire, England', '123-456-7890', 'jane.austen@example.com'),
+('Mark', 'Twain', 'Hartford, Connecticut, USA', '234-567-8901', 'mark.twain@example.com'),
+('Charles', 'Dickens', 'Portsmouth, England', '345-678-9012', 'charles.dickens@example.com'),
+('F. Scott', 'Fitzgerald', 'St. Paul, Minnesota, USA', '456-789-0123', 'f.scott.fitzgerald@example.com'),
+('George', 'Orwell', 'Motihari, Bihar, India', '567-890-1234', 'george.orwell@example.com'),
+('J.K.', 'Rowling', 'Yate, Gloucestershire, England', '678-901-2345', 'jk.rowling@example.com'),
+('Ernest', 'Hemingway', 'Oak Park, Illinois, USA', '789-012-3456', 'ernest.hemingway@example.com'),
+('Agatha', 'Christie', 'Torquay, Devon, England', '890-123-4567', 'agatha.christie@example.com'),
+('Leo', 'Tolstoy', 'Tula Province, Russia', '901-234-5678', 'leo.tolstoy@example.com'),
+('Herman', 'Melville', 'New York City, New York, USA', '012-345-6789', 'herman.melville@example.com'),
+('Emily', 'Bronte', 'Thornton, Yorkshire, England', '123-678-9012', 'emily.bronte@example.com'),
+('Virginia', 'Woolf', 'London, England', '234-789-0123', 'virginia.woolf@example.com'),
+('Gabriel Garcia', 'Marquez', 'Aracataca, Colombia', '345-890-1234', 'gabriel.garcia.marquez@example.com'),
+('Harper', 'Lee', 'Monroeville, Alabama, USA', '456-901-2345', 'harper.lee@example.com'),
+('J.R.R.', 'Tolkien', 'Bloemfontein, South Africa', '567-012-3456', 'jrr.tolkien@example.com'),
+('Oscar', 'Wilde', 'Dublin, Ireland', '678-123-4567', 'oscar.wilde@example.com'),
+('Fyodor', 'Dostoevsky', 'Moscow, Russia', '789-234-5678', 'fyodor.dostoevsky@example.com'),
+('James', 'Joyce', 'Dublin, Ireland', '890-345-6789', 'james.joyce@example.com'),
+('Mary', 'Shelley', 'London, England', '901-456-7890', 'mary.shelley@example.com'),
+('H.G.', 'Wells', 'Bromley, Kent, England', '012-567-8901', 'hg.wells@example.com');
+
+v. PUBLISHERS TABLE:
+
+INSERT INTO Publishers (name, address, phone, email) VALUES
+('Penguin Random House', '1745 Broadway, New York, NY 10019, USA', '212-782-9000', 'info@penguinrandomhouse.com'),
+('HarperCollins', '195 Broadway, New York, NY 10007, USA', '212-207-7000', 'info@harpercollins.com'),
+('Simon & Schuster', '1230 Avenue of the Americas, New York, NY 10020, USA', '212-698-7000', 'info@simonandschuster.com'),
+('Hachette Livre', '43 Quai de Grenelle, 75015 Paris, France', '01-43-92-30-00', 'info@hachette.com'),
+('Macmillan Publishers', '120 Broadway, New York, NY 10271, USA', '646-307-5151', 'info@macmillan.com'),
+('Scholastic Corporation', '557 Broadway, New York, NY 10012, USA', '212-343-6100', 'info@scholastic.com'),
+('Pearson Education', '80 Strand, London WC2R 0RL, UK', '020-7010-2000', 'info@pearson.com'),
+('Wiley', '111 River Street, Hoboken, NJ 07030, USA', '201-748-6000', 'info@wiley.com'),
+('Cengage Learning', '200 Pier Four Blvd, Boston, MA 02210, USA', '617-289-7700', 'info@cengage.com'),
+('Springer', '233 Spring Street, New York, NY 10013, USA', '212-460-1500', 'info@springer.com'),
+('Oxford University Press', 'Great Clarendon Street, Oxford OX2 6DP, UK', '01865-556767', 'info@oup.com'),
+('Cambridge University Press', 'University Printing House, Shaftesbury Road, Cambridge CB2 8BS, UK', '01223-312393', 'info@cambridge.org'),
+('Bloomsbury Publishing', '50 Bedford Square, London WC1B 3DP, UK', '020-7631-5600', 'info@bloomsbury.com'),
+('Macmillan Education', '4 Crinan Street, London N1 9XW, UK', '020-7843-4800', 'info@macmillaneducation.com'),
+('Houghton Mifflin Harcourt', '125 High Street, Boston, MA 02110, USA', '617-351-5000', 'info@hmhco.com'),
+('Elsevier', '230 Park Avenue, Suite 800, New York, NY 10169, USA', '212-633-3800', 'info@elsevier.com'),
+('McGraw-Hill Education', '2 Penn Plaza, New York, NY 10121, USA', '646-766-2000', 'info@mheducation.com'),
+('Pan Macmillan', '20 New Wharf Road, London N1 9RR, UK', '020-7014-6000', 'info@panmacmillan.com'),
+('Faber and Faber', 'Bloomsbury House, 74-77 Great Russell Street, London WC1B 3DA, UK', '020-7927-3800', 'info@faber.co.uk'),
+('Random House', '1745 Broadway, New York, NY 10019, USA', '212-782-9000', 'info@randomhouse.com');
+
+vi. LIBRARIANS TABLE:
+
+INSERT INTO Librarians (first_name, last_name, email, phone, address, hire_date, role, salary) VALUES
+('Alice', 'Johnson', 'alice.johnson@example.com', '123-456-7890', '123 Maple St, Springfield, IL, USA, 62701', '2015-06-15', 'Head Librarian', 55000),
+('Robert', 'Smith', 'robert.smith@example.com', '234-567-8901', '456 Oak St, Shelbyville, IL, USA, 62565', '2016-08-20', 'Assistant Librarian', 45000),
+('Linda', 'Williams', 'linda.williams@example.com', '345-678-9012', '789 Pine St, Centerville, IL, USA, 62014', '2017-09-10', 'Library Technician', 40000),
+('Michael', 'Brown', 'michael.brown@example.com', '456-789-0123', '321 Cedar St, Riverdale, IL, USA, 60927', '2018-07-05', 'Cataloger', 42000),
+('Patricia', 'Jones', 'patricia.jones@example.com', '567-890-1234', '654 Birch St, Capital City, IL, USA, 62702', '2019-05-25', 'Archivist', 47000),
+('William', 'Davis', 'william.davis@example.com', '678-901-2345', '987 Elm St, Ogdenville, IL, USA, 62269', '2020-11-15', 'Reference Librarian', 49000),
+('Barbara', 'Miller', 'barbara.miller@example.com', '789-012-3456', '123 Spruce St, North Haverbrook, IL, USA, 62088', '2021-10-30', 'Circulation Clerk', 38000),
+('James', 'Wilson', 'james.wilson@example.com', '890-123-4567', '456 Ash St, Brockway, IL, USA, 61820', '2022-02-22', 'Children\'s Librarian', 46000),
+('Mary', 'Moore', 'mary.moore@example.com', '901-234-5678', '789 Chestnut St, Springfield, IL, USA, 62703', '2023-03-01', 'Library Assistant', 35000),
+('Charles', 'Taylor', 'charles.taylor@example.com', '012-345-6789', '321 Willow St, Shelbyville, IL, USA, 62566', '2014-12-10', 'Acquisitions Librarian', 53000),
+('Jennifer', 'Anderson', 'jennifer.anderson@example.com', '123-678-9012', '654 Redwood St, Centerville, IL, USA, 62015', '2013-06-20', 'Technical Services Librarian', 51000),
+('Richard', 'Thomas', 'richard.thomas@example.com', '234-789-0123', '987 Hawthorn St, Riverdale, IL, USA, 60928', '2012-05-18', 'Collection Development Librarian', 52000),
+('Susan', 'Jackson', 'susan.jackson@example.com', '345-890-1234', '123 Palm St, Capital City, IL, USA, 62704', '2011-04-25', 'Electronic Resources Librarian', 55000),
+('Joseph', 'White', 'joseph.white@example.com', '456-901-2345', '456 Cypress St, Ogdenville, IL, USA, 62270', '2010-08-15', 'Metadata Librarian', 54000),
+('Sarah', 'Harris', 'sarah.harris@example.com', '567-012-3456', '789 Magnolia St, North Haverbrook, IL, USA, 62089', '2009-07-05', 'Digital Services Librarian', 53000),
+('Thomas', 'Martin', 'thomas.martin@example.com', '678-123-4567', '321 Poplar St, Brockway, IL, USA, 61821', '2008-09-25', 'Systems Librarian', 56000),
+('Karen', 'Garcia', 'karen.garcia@example.com', '789-234-5678', '654 Sycamore St, Springfield, IL, USA, 62705', '2007-11-10', 'Outreach Librarian', 45000),
+('Christopher', 'Martinez', 'christopher.martinez@example.com', '890-345-6789', '987 Fir St, Shelbyville, IL, USA, 62567', '2006-12-30', 'Media Specialist', 44000),
+('Jessica', 'Clark', 'jessica.clark@example.com', '901-456-7890', '123 Willow St, Centerville, IL, USA, 62016', '2005-03-10', 'School Librarian', 41000),
+('Daniel', 'Rodriguez', 'daniel.rodriguez@example.com', '012-567-8901', '456 Ash St, Riverdale, IL, USA, 60929', '2004-01-30', 'Law Librarian', 58000);
+
+vii. RESERVATIONS TABLE:
+
+INSERT INTO Reservations (member_id, book_id, reservation_date, status) VALUES
+(1, 9, '2023-09-01', 'pending'),
+(2, 12, '2023-09-05', 'pending'),
+(3, 9, '2023-09-10', 'pending'),
+(4, 17, '2023-09-15', 'pending'),
+(5, 12, '2023-09-20', 'pending'),
+(6, 17, '2023-09-25', 'pending'),
+(7, 17, '2023-09-30', 'pending'),
+(8, 12, '2023-10-05', 'pending'),
+(9, 9, '2023-10-10', 'pending'),
+(10, 17, '2023-10-15', 'pending');
+
+
