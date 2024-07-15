@@ -1,0 +1,60 @@
+Query 1: Retrieve the details of all books and their respective publishers:
+
+SELECT 
+    books.Title AS `Book Title`, 
+    publishers.Name AS `Publisher Name`, 
+    publishers.Address AS `Publisher Address`, 
+    publishers.Phone AS `Publisher Phone`
+FROM 
+    books
+INNER JOIN 
+    publishers ON books.Publisher_id = publishers.Publisher_id;
+
+
+Query2: Retrieve the number of copies available for each book:
+
+SELECT 
+    books.Title AS `Book Title`, 
+    books.quantity_in_stock AS `Number of Copies`
+FROM 
+    books;
+
+
+Query 3: Retrieve the details of books loaned out along with the borrower's information:
+
+SELECT 
+    books.Title AS `Book Title`, 
+    members.first_Name AS `Borrower First Name`, 
+    members.last_Name AS `Borrower Last Name`,
+    members.Address AS `Borrower Address`, 
+    members.Phone AS `Borrower Phone`, 
+    loans.Loan_Date AS `Loan Date`, 
+    loans.Due_Date AS `Due Date`
+FROM 
+    loans
+INNER JOIN 
+    books ON books.Book_ID = Loans.Book_ID
+INNER JOIN 
+    members ON loans.member_id = members.member_id;
+
+
+Query 4: Retrieve the names of all authors who have written a specific book:
+
+SELECT 
+    books.Title AS `Book Title`, 
+    authors.First_Name AS 'Author First Name', authors.Last_Name AS `Author Last Name`
+FROM 
+    authors
+INNER JOIN 
+    books ON authors.author_ID = books.author_ID
+WHERE 
+    books.Title = 'Crime and Punishment';
+
+
+Query 5: Find all books checked out when viewed on a particular date:
+
+SELECT Books.book_id, Books.title, Members.first_name, Members.last_name, Loans.loan_date, Loans.due_date
+FROM Loans
+JOIN Books ON Loans.book_id = Books.book_id
+JOIN Members ON Loans.member_id = Members.member_id
+WHERE Loans.due_date > '2023-08-11';
